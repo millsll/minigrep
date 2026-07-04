@@ -15,8 +15,15 @@ impl Config {
         }
         let query = args[1].clone();
         let file_path = args[2].clone();
+        let mut ignore_case = false;
+        if let Some(ignore) = args.get(3) {
+            ignore_case = ignore == "1";
+        }
 
-        let ignore_case = env::var("IGNORE_CASE").is_ok();
+        if let Ok(ignore) = env::var("IGNORE_CASE") {
+            ignore_case = ignore == "1";
+        }
+        //let ignore_case = env::var("IGNORE_CASE").is_ok();
         Ok(Config {
             query,
             file_path,
